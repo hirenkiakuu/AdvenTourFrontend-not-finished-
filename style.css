@@ -1,0 +1,46 @@
+.container {
+    max-width: 500px;
+}
+
+.categories_items {
+    display: flex;
+    flex-direction: column;
+}
+
+.box_item_img {
+    width: 106px;
+    height: 106px;
+    background-color: #ccc;
+    border-radius: 26px;
+}
+
+.box_item {
+    width: 33%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.items_box {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+.button {
+    width: 200px;
+    height: 54px;
+    background-color: #0C79FE;
+    border-radius: 18px;
+    color: #ffffff;
+    border: 0;
+    font-size: 19px;
+}
+
+.button:hover {
+    background-color: #348bf5;
+    cursor: pointer;
+}
