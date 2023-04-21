@@ -1,0 +1,9 @@
+{
+    "name": "AdvenTour",
+    "short_name": "AdvenTour",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#0066FF",
+    "theme_color": "#0066FF",
+    "orientation": "portrait-primary"
+}
