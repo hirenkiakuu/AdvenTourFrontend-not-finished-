@@ -1,1 +1,3 @@
-asdfsasdf
+function Alert() {
+    alert("1");
+}
