@@ -4,49 +4,75 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AdvenTure</title>
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/styles/normalize.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section>
+    <!-- <div class="blackout"></div> -->
+
+    <section class="filter">
         <div class="container">
-            <div class="thematics_section">
-                <h1>Архитектурные сооружения</h1>
-                <div class="categories_items">
-                    <ul class="items_box">
-                        <li class="box_item">
-                            <img src="" alt="картинка" class="box_item_img">
-                            <p class="item_box_name">церкви и храмы</p>
+            <div class="close_btn"></div>
+
+            <div class="range_container">
+                <div class="route_time">
+                    <h2 class="range_title">Время маршрута (часов)</h2>
+                    <input class="range_item styled-slider slider-progress" type="range" name="route_time" min="0" max="10">
+                    <div class="range_values">
+                        <span class="range_value">0</span>
+                        <span class="range_value">10</span>
+                    </div>
+                </div>
+                <div class="budget">
+                    <h2 class="range_title">Бюджет (рублей)</h2>
+                    <input class="range_item styled-slider slider-progress" type="range" name="budget" min="0" max="60000">
+                    <div class="range_values">
+                        <span class="range_value">0</span>
+                        <span class="range_value">60000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="categories_container">
+                <h1 class="categories_title">Категории</h1>
+                <div class="categories_wrapper">
+                    <ul class="categories_items">
+                        <li class="categories_item">
+                            <span class="categories_content">Архитектура</span>
                         </li>
-                        <li class="box_item">
-                            <img src="" alt="картинка" class="box_item_img">
-                            <p class="item_box_name">площади</p>
-                        </li>    
-                        <li class="box_item">
-                            <img src="" alt="картинка" class="box_item_img">
-                            <p class="item_box_name">скульптуры</p>
-                        </li>      
-                        <li class="box_item">
-                            <img src="" alt="картинка" class="box_item_img">
-                            <p class="item_box_name">мосты</p>
+                        <li class="categories_item">
+                            <span class="categories_content">Вкусно покушать</span>
                         </li>
-                        <li class="box_item">
-                            <img src="" alt="картинка" class="box_item_img">
-                            <p class="item_box_name">еще какая-то шняга</p>
+                        <li class="categories_item">
+                            <span class="categories_content">Развлечения</span>
+                        </li>
+                        <li class="categories_item">
+                            <span class="categories_content">Просвещение</span>
                         </li>
                     </ul>
                 </div>
             </div>
-            <input type="range" name="Price" min="0" max="6000" class="range_input">
-            <label for="Price">Цена</label>
-            <input type="range" name="Time" min="0" max="8" class="range_input">
-            <label for="Time">Время маршрута</label>
-            <button class="button" id="">Применить</button>
+
+            <div class="apply_btn__container">
+                <div class="apply_btn">Применить</div>
+            </div>
         </div>
     </section>
+
+    <!-- <section class="categories">
+        <div class="container">
+
+        </div>
+    </section> -->
+
+
 </body>
-<script src="script.js"></script>
-<script src="serviceWorker.js"></script>
-<script src="app.js"></script>
+<script src="/scripts/script.js"></script>
+<script src="/scripts/pwa/serviceWorker.js"></script>
+<script src="/scripts/pwa/app.js"></script>
 </html>
