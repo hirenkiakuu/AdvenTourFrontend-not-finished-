@@ -2,8 +2,21 @@
     "name": "AdvenTour",
     "short_name": "AdvenTour",
     "start_url": "index.html",
-    "display": "standalone",
-    "background_color": "#0066FF",
+    "display": "fullscreen",
+    "background_color": "#fff",
     "theme_color": "#fff",
-    "orientation": "portrait-primary"
+    "orientation": "portrait-primary",
+    "description": "Progressive Web App that lists games submitted to the A-Frame category in the js13kGames 2017 competition.",
+    "icons": [
+        {
+            "src": "img/icons/32-32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "img/icons/512-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
 }
