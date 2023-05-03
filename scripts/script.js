@@ -6,7 +6,6 @@ for (let e of document.querySelectorAll('input[type="range"].slider-progress')) 
 }
 
 // categories 
-
 const categories = document.querySelectorAll('.categories_item');
 const categoriesWindow = document.querySelector('.categorie');
 const blackout = document.querySelector('.blackout');
@@ -17,6 +16,7 @@ categories.forEach((item, index) => {
     openCategoriesMenu(index);
   });
 });
+
 
 // обработка клика на blackout
 blackout.addEventListener('click', (e) => {
@@ -47,6 +47,7 @@ function toggleBlackout() {
   blackout.classList.toggle('active')
 }
 
+
 let event = null;
 let len = 0;
 
@@ -73,14 +74,41 @@ categoriesWindow.addEventListener("touchend", function (e) {
     }
 });
 
-//блокируем обновление страницы при скроле вниз
-// var lastY = 1;
-// document.addEventListener("touchmove", function (event) {
-//   var lastS = document.documentElement.scrollTop;
-//   if(lastS == 0 && (lastY-event.touches[0].clientY) < 0 && event.cancelable){
-//       event.preventDefault(); 
-//       event.stopPropagation();
-//   }
-//   lastY = event.touches[0].clientY;
-// },{passive: false});
+
+const subcategories = document.querySelectorAll('.categorie_item');
+let selectSubCategories = [];
+
+// событие клика на подкатегории 
+subcategories.forEach((item, index) => {
+  item.addEventListener('click', (e) => {
+    selectSubcategory(item);
+    selectSubCategories.push(item);
+    addItemList(item)
+  })
+});
+
+// выбор подкатегории
+function selectSubcategory(item) {
+  item.classList.toggle('active_item');
+}
+
+
+function addItemList(item) {
+  if (selectSubCategories.length != 0) {
+    document.querySelector('.categoriesList').style.display = 'block';
+    let liItem = document.createElement('li');
+    liItem.className = "categoriesList_item";
+    liItem.innerHTML = `
+      <img class="categoriesList_item__img" src="${item.querySelector('img').src}" alt="" width="60px" height="60px">
+    `
+    document.querySelector('.categoriesList_items').append(liItem)
+  } else {
+    document.querySelector('.categoriesList').style.display = 'none';
+  }
+}
+
+
+
+
+
 
