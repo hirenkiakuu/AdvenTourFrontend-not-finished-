@@ -1,0 +1,16 @@
+#map {
+    width: 100%; 
+    height: 100vh;
+}
+
+.map_section {
+    position: relative;
+}
+
+.filter_btn {
+    position: absolute;
+    top: 30px;
+    right: 19px;
+    z-index: 20;
+}
+
