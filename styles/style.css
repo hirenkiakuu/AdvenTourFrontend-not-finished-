@@ -315,6 +315,21 @@ body {
 .categoriesList_item__img {
     box-shadow: 2px 2px 14px -1px rgba(0, 0, 0, 0.07);
     border-radius: 100%;
+    border: 3px solid #E53B00;
     background-color: transparent;
+    position: relative;
+}
+.categoriesList_item {
+    position: relative;
+}
+.categoriesList_item::after{
+    content: "";
+    position: absolute;
+    background-image: url('../img/delete.svg');
+    background-size: cover;
+    width: 17px;
+    height: 17px;
+    right: 1px;
+    top: 2px;
 }
 
