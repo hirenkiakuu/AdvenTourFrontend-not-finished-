@@ -17,6 +17,7 @@ const budget = 0;
 
 timeInpute.value = time;
 budgetInput.value = budget;
+timeValue.textContent = time;
 
 timeInpute.addEventListener('input', () => {
   timeValue.textContent = timeInpute.value;
