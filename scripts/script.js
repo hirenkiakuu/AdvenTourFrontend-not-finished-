@@ -14,6 +14,7 @@ const blackout = document.querySelector('.blackout');
 categories.forEach((item, index) => {
   item.addEventListener('click', (e) => {
     openCategoriesMenu(index);
+    showSubcategories(index);
   });
 });
 
@@ -35,6 +36,7 @@ function closeCategoriesMenu() {
   categoriesWindow.style.transform = 'translateY(100vh)';
   document.querySelector('body').style.overflow = 'scroll';
   blackout.classList.remove('active');
+  HideSubcategories();
 }
 
 // двигает меню
@@ -45,6 +47,19 @@ function moveCategoriesMenu(len) {
 // включает и выключает blackout
 function toggleBlackout() {
   blackout.classList.toggle('active')
+}
+
+function showSubcategories(index) { 
+  let items = document.querySelectorAll(`.categorie_item[data="${index}"]`);
+  for(let item of items) {
+    item.style.display = 'flex';
+  }
+}
+function HideSubcategories() {
+  let items = document.querySelectorAll(`.categorie_item`);
+  for(let item of items) {
+    item.style.display = 'none';
+  }
 }
 
 
@@ -71,41 +86,90 @@ categoriesWindow.addEventListener("touchend", function (e) {
       openCategoriesMenu();
     } else {
       closeCategoriesMenu();
+      len = 0;
     }
 });
 
 
 const subcategories = document.querySelectorAll('.categorie_item');
-let selectSubCategories = [];
+let selectSubCategories = {};
 
 // событие клика на подкатегории 
 subcategories.forEach((item, index) => {
   item.addEventListener('click', (e) => {
-    selectSubcategory(item);
-    selectSubCategories.push(item);
-    addItemList(item)
+    selectSubcategory(index);  
+    toggleItemParent();
   })
 });
 
-// выбор подкатегории
-function selectSubcategory(item) {
-  item.classList.toggle('active_item');
+// активация подкатегории
+// если елемент был выбран, то деактивируем иначе активируем 
+// добавляем выбранный элемент в объект по индексу
+function selectSubcategory(index) {
+  if (subcategories[index].classList.contains('active_item')) {
+    subcategories[index].classList.remove('active_item'); 
+    delete selectSubCategories[index];
+    toggleItem()
+  } else {
+    subcategories[index].classList.add('active_item');  
+    selectSubCategories[index] = subcategories[index];
+    toggleItem()
+  }
 }
 
+// если есть выбранные элементы, добавляем класс родителя
+function toggleItemParent() {
+  if (Object.keys(selectSubCategories).length != 0) {
+    document.querySelector('.categoriesList').style.display = 'block'; 
+    activeApplybtn(); 
+  } else {
+    document.querySelector('.categoriesList').style.display = 'none';
+    unActiveApplybtn();
+  }
+}
 
-function addItemList(item) {
-  if (selectSubCategories.length != 0) {
-    document.querySelector('.categoriesList').style.display = 'block';
+// обновляем html при изменении массива
+function toggleItem() {
+  // создаем контенер для подкатегорий
+  let container = document.createElement('ul');
+  container.className = "categoriesList_items";
+
+  for(let item in selectSubCategories) {
     let liItem = document.createElement('li');
     liItem.className = "categoriesList_item";
     liItem.innerHTML = `
-      <img class="categoriesList_item__img" src="${item.querySelector('img').src}" alt="" width="60px" height="60px">
+      <img class="categoriesList_item__img" src="${selectSubCategories[item].querySelector('img').src}" alt="" width="60px" height="60px">
     `
-    document.querySelector('.categoriesList_items').append(liItem)
-  } else {
-    document.querySelector('.categoriesList').style.display = 'none';
+    container.append(liItem);
+
+    liItem.addEventListener('click', () => {
+      delete selectSubCategories[item];
+      subcategories[item].classList.remove('active_item'); 
+      toggleItemParent()
+      toggleItem()
+    })
   }
+  document.querySelector('.categoriesList').innerHTML = `
+  <h2 class="categoriesList_title">Ваш выбор:</h2>
+  `;
+  document.querySelector('.categoriesList').append(container);
 }
+
+function activeApplybtn() {
+  let btn = document.querySelector('.apply_btn');
+  btn.style.background = '#0C79FE';
+  btn.addEventListener('click', applyBtn)
+}
+function unActiveApplybtn() {
+  let btn = document.querySelector('.apply_btn');
+  btn.style.background = '#AFAFAF';
+  btn.removeEventListener('click', applyBtn)
+}
+
+function applyBtn() {
+  console.log('ok')
+}
+
 
 
 
