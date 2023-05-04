@@ -42,7 +42,7 @@ body {
 .active_item::after {
     position: absolute;
     content: "";
-    background-image: url('/img/check.svg');
+    background-image: url('img/check.svg');
     width: 25px;
     height: 25px;
     top: 0;
