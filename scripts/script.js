@@ -4,6 +4,27 @@ for (let e of document.querySelectorAll('input[type="range"].slider-progress')) 
     e.style.setProperty('--max', e.max == '' ? '100' : e.max);
     e.addEventListener('input', () => e.style.setProperty('--value', e.value));
 }
+// достаем значения из input
+const timeInpute = document.querySelector('.time_input');
+const budgetInput = document.querySelector('.budget_input');
+
+const timeValue = document.querySelector('.time_value');
+const budgetValue = document.querySelector('.budget_value');
+
+// стандартные значения
+const time = 5;
+const budget = 0;
+
+timeInpute.value = time;
+budgetInput.value = budget;
+
+timeInpute.addEventListener('input', () => {
+  timeValue.textContent = timeInpute.value;
+});
+
+budgetInput.addEventListener('input', () => {
+  budgetValue.textContent = budgetInput.value;
+});
 
 // categories 
 const categories = document.querySelectorAll('.categories_item');

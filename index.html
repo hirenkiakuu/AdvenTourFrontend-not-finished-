@@ -25,18 +25,18 @@
             <div class="range_container">
                 <div class="route_time">
                     <h2 class="range_title">Время маршрута (часов)</h2>
-                    <input class="range_item styled-slider slider-progress" type="range" name="route_time" min="0" max="10">
+                    <input class="range_item styled-slider slider-progress time_input" type="range" name="route_time" min="0" max="10">
                     <div class="range_values">
                         <span class="range_value">0</span>
-                        <span class="range_value">10</span>
+                        <span class="range_value time_value">10</span>
                     </div>
                 </div>
                 <div class="budget">
                     <h2 class="range_title">Бюджет (рублей)</h2>
-                    <input class="range_item styled-slider slider-progress" type="range" name="budget" min="0" max="60000">
+                    <input class="range_item styled-slider slider-progress budget_input" type="range" name="budget" min="0" max="60000" value="0">
                     <div class="range_values">
                         <span class="range_value">0</span>
-                        <span class="range_value">60000</span>
+                        <span class="range_value budget_value">60000</span>
                     </div>
                 </div>
             </div>
@@ -91,13 +91,71 @@
                         <img class="categorie_item__img" src="img/architecture/monuments.svg" alt="Памятники">
                         <span class="categorie_item__title">Памятники</span>
                     </li>
+                    
+                    <!-- вкусно покушать -->
                     <li class="categorie_item" data="1">
                         <img class="categorie_item__img" src="img/meal/restaurants.svg" alt="Памятники">
-                        <span class="categorie_item__title">Памятники</span>
+                        <span class="categorie_item__title">Рестораны</span>
+                    </li>
+                    <li class="categorie_item" data="1">
+                        <img class="categorie_item__img" src="img/meal/cafe.svg" alt="Памятники">
+                        <span class="categorie_item__title">Кафе</span>
+                    </li>
+                    <li class="categorie_item" data="1">
+                        <img class="categorie_item__img" src="img/meal/canteens.svg" alt="Памятники">
+                        <span class="categorie_item__title">Столовые</span>
+                    </li>
+
+                    <!-- развлечения -->
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/quests.svg" alt="Памятники">
+                        <span class="categorie_item__title">Квесты</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/anti-cafe.svg" alt="Памятники">
+                        <span class="categorie_item__title">Антикафе</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/game-clubs.svg" alt="Памятники">
+                        <span class="categorie_item__title">Геймклубы</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/karaoke.svg" alt="Памятники">
+                        <span class="categorie_item__title">Караоке</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/zoos.svg" alt="Памятники">
+                        <span class="categorie_item__title">Зоопарки</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/water-parks.svg" alt="Памятники">
+                        <span class="categorie_item__title">Аквапарки</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/coworking.svg" alt="Памятники">
+                        <span class="categorie_item__title">Коворкинги</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/oceanariums.svg" alt="Памятники">
+                        <span class="categorie_item__title">Океанариум</span>
+                    </li>
+
+                    <!-- Просвещение -->
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/museums.svg" alt="Памятники">
+                        <span class="categorie_item__title">Музеи</span>
                     </li>
                     <li class="categorie_item" data="3">
                         <img class="categorie_item__img" src="img/education/libraries.svg" alt="Памятники">
                         <span class="categorie_item__title">Библиотеки</span>
+                    </li>
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/theaters.svg" alt="Памятники">
+                        <span class="categorie_item__title">Театры</span>
+                    </li>
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/exhibitions.svg" alt="Памятники">
+                        <span class="categorie_item__title">Выставки</span>
                     </li>
                 </ul>
             </div>
