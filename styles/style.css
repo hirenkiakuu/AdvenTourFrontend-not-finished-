@@ -25,6 +25,12 @@ body {
     opacity: 0;
     visibility: hidden;
 }
+.filter_screen {
+    display: none;
+}
+.active_filter {
+    display: block !important;
+}
 .active {
     opacity: 1;
     visibility: visible;
@@ -333,3 +339,23 @@ body {
     top: 2px;
 }
 
+
+.map {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 10;
+    display: none;
+}
+#map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.burger {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 20;
+}
