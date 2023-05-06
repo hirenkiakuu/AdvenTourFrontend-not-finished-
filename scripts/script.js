@@ -208,7 +208,7 @@ document.querySelector('.burger').addEventListener('click', () => {
 /// map
 ymaps3.ready.then(init);
 function init() {
-  console.log('good')
+  console.log('work')
   const map = new ymaps3.YMap(document.getElementById('map'), {
     location: {
       center: [37.64, 55.76],
@@ -216,6 +216,8 @@ function init() {
     }
   });
 }
+
+
 
 
 
