@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Yandex Map API 3.0 JavaScript</title>
-  <script src="https://api-maps.yandex.ru/3.0/xdna-core.js"></script>
-  <script src="https://api-maps.yandex.ru/3.0/?lang=ru_RU&amp;apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60" type="text/javascript"></script>
-   <script>
-    ymaps.ready(init);
+  <head>
+    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/3.0/?apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60&lang=ru_RU"></script>
+    <script>
+      ymaps3.ready.then(init);
+      function init() {
+        const map = new ymaps3.YMap(document.getElementById('map'), {
+          location: {
+            center: [37.64, 55.76],
+            zoom: 7
+          }
+        });
+      }
+    </script>
+  </head>
 
-    function init() {
-      var myMap = new ymaps.Map("map", {
-        center: [55.76, 37.64],
-        zoom: 10
-      });
-
-      // Добавление метки на карту
-      var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
-        hintContent: 'Москва',
-        balloonContent: 'Столица России'
-      });
-
-      myMap.geoObjects.add(myPlacemark);
-    }
-  </script>
-</head>
-<body>
-  <div id="map" style="width: 600px; height: 400px;"></div>
-</body>
+  <body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+  </body>
 </html>
