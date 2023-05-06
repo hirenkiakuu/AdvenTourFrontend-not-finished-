@@ -1,179 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdvenTure</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-    <script src="https://api-maps.yandex.ru/3.0/?lang=ru_RU&amp;apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60" type="text/javascript"></script>
+  <meta charset="utf-8">
+  <title>Yandex Map API 3.0 JavaScript</title>
+  <script src="https://api-maps.yandex.ru/3.0/xdna-core.js"></script>
+  <script src="https://api-maps.yandex.ru/3.0/loader.js"></script>
+  <script>
+    ymaps.ready(init);
+
+    function init() {
+      var myMap = new ymaps.Map("map", {
+        center: [55.76, 37.64],
+        zoom: 10
+      });
+
+      // Добавление метки на карту
+      var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+        hintContent: 'Москва',
+        balloonContent: 'Столица России'
+      });
+
+      myMap.geoObjects.add(myPlacemark);
+    }
+  </script>
 </head>
 <body>
-    <div class="filter_screen">
-    <div class="blackout"></div>
-
-    <div class="close_btn"></div>
-        <div class="categoriesList">
-
-        </div>
-
-    <section class="filter">
-        <div class="container">
-            <div class="range_container">
-                <div class="route_time">
-                    <h2 class="range_title">Время маршрута (часов)</h2>
-                    <input class="range_item styled-slider slider-progress time_input" type="range" name="route_time" min="0" max="10">
-                    <div class="range_values">
-                        <span class="range_value">0</span>
-                        <span class="range_value time_value">10</span>
-                    </div>
-                </div>
-                <div class="budget">
-                    <h2 class="range_title">Бюджет (рублей)</h2>
-                    <input class="range_item styled-slider slider-progress budget_input" type="range" name="budget" min="0" max="60000" value="0">
-                    <div class="range_values">
-                        <span class="range_value">0</span>
-                        <span class="range_value budget_value">60000</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="categories_container">
-                <h1 class="categories_title">Категории</h1>
-                <div class="categories_wrapper">
-                    <ul class="categories_items">
-                        <li class="categories_item">
-                            <span class="categories_content">Архитектура</span>
-                        </li>
-                        <li class="categories_item">
-                            <span class="categories_content">Вкусно покушать</span>
-                        </li>
-                        <li class="categories_item">
-                            <span class="categories_content">Развлечения</span>
-                        </li>
-                        <li class="categories_item">
-                            <span class="categories_content">Просвещение</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="apply_btn__container">
-                <div class="apply_btn">Применить</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="categorie">
-        <div class="container">
-            <div class="categorie_wrapper">
-                <ul class="categorie_items">
-                    <li class="categorie_item" data="0">
-                        <img class="categorie_item__img" src="img/architecture/temple.svg" alt="Храмы">
-                        <span class="categorie_item__title">Храмы</span>
-                    </li>
-                    <li class="categorie_item" data="0">
-                        <img class="categorie_item__img" src="img/architecture/squares.svg" alt="Площади">
-                        <span class="categorie_item__title">Площади</span>
-                    </li>
-                    <li class="categorie_item" data="0">
-                        <img class="categorie_item__img" src="img/architecture/sculptures.svg" alt="Скульптуры">
-                        <span class="categorie_item__title">Скульптуры</span>
-                    </li>
-                    <li class="categorie_item" data="0">
-                        <img class="categorie_item__img" src="img/architecture/bridges.svg" alt="Мосты">
-                        <span class="categorie_item__title">Мосты</span>
-                    </li>
-                    <li class="categorie_item" data="0">
-                        <img class="categorie_item__img" src="img/architecture/monuments.svg" alt="Памятники">
-                        <span class="categorie_item__title">Памятники</span>
-                    </li>
-                    
-                    <!-- вкусно покушать -->
-                    <li class="categorie_item" data="1">
-                        <img class="categorie_item__img" src="img/meal/restaurants.svg" alt="Памятники">
-                        <span class="categorie_item__title">Рестораны</span>
-                    </li>
-                    <li class="categorie_item" data="1">
-                        <img class="categorie_item__img" src="img/meal/cafe.svg" alt="Памятники">
-                        <span class="categorie_item__title">Кафе</span>
-                    </li>
-                    <li class="categorie_item" data="1">
-                        <img class="categorie_item__img" src="img/meal/canteens.svg" alt="Памятники">
-                        <span class="categorie_item__title">Столовые</span>
-                    </li>
-
-                    <!-- развлечения -->
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/quests.svg" alt="Памятники">
-                        <span class="categorie_item__title">Квесты</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/anti-cafe.svg" alt="Памятники">
-                        <span class="categorie_item__title">Антикафе</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/game-clubs.svg" alt="Памятники">
-                        <span class="categorie_item__title">Геймклубы</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/karaoke.svg" alt="Памятники">
-                        <span class="categorie_item__title">Караоке</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/zoos.svg" alt="Памятники">
-                        <span class="categorie_item__title">Зоопарки</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/water-parks.svg" alt="Памятники">
-                        <span class="categorie_item__title">Аквапарки</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/coworking.svg" alt="Памятники">
-                        <span class="categorie_item__title">Коворкинги</span>
-                    </li>
-                    <li class="categorie_item" data="2">
-                        <img class="categorie_item__img" src="img/entertainments/oceanariums.svg" alt="Памятники">
-                        <span class="categorie_item__title">Океанариум</span>
-                    </li>
-
-                    <!-- Просвещение -->
-                    <li class="categorie_item" data="3">
-                        <img class="categorie_item__img" src="img/education/museums.svg" alt="Памятники">
-                        <span class="categorie_item__title">Музеи</span>
-                    </li>
-                    <li class="categorie_item" data="3">
-                        <img class="categorie_item__img" src="img/education/libraries.svg" alt="Памятники">
-                        <span class="categorie_item__title">Библиотеки</span>
-                    </li>
-                    <li class="categorie_item" data="3">
-                        <img class="categorie_item__img" src="img/education/theaters.svg" alt="Памятники">
-                        <span class="categorie_item__title">Театры</span>
-                    </li>
-                    <li class="categorie_item" data="3">
-                        <img class="categorie_item__img" src="img/education/exhibitions.svg" alt="Памятники">
-                        <span class="categorie_item__title">Выставки</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-</div>
-
-<section class="map active_filter">
-    <div id="map"></div>
-    <div class="burger"><img src="img/icons_map/burger.svg" alt=""></div>
-    <div class="list"></div>
-    <div class="location"></div>
-</section>
-
+  <div id="map" style="width: 600px; height: 400px;"></div>
 </body>
-<script src="scripts/script.js"></script>
-<script src="serviceWorker.js"></script>
-<script src="app.js"></script>
 </html>
