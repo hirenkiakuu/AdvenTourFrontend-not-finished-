@@ -206,23 +206,13 @@ document.querySelector('.burger').addEventListener('click', () => {
 
 
 /// map
-ymaps3.ready.then(init);
+ymaps.ready(init);
 function init() {
-  console.log('work')
-  const map = new ymaps3.YMap(document.getElementById('map'), {
-    location: {
-      center: [37.64, 55.76],
-      zoom: 7
-    }
-  });
-  var geolocation = ymaps3.geolocation;
-
-  geolocation.getPosition({
-    provider: 'yandex',
-    mapStateAutoApply: true
-}).then(function (result) {
-  console.log(result.coords)
-});
+    var map = new ymaps.Map("map", {
+        center: [55.76, 37.64],
+        zoom: 10,
+        controls: []
+    });
 }
 
 
