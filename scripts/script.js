@@ -222,40 +222,31 @@ function init() {
       buttonMaxWidth: 300
   });
   
-  ymaps.geolocation.get({
-    provider: 'yandex',
-    mapStateAutoApply: true
-}).then(function (result) {
-  let p = result.geoObjects.position;
-  points.unshift({ name: "старт", latitude: p[0], longitude: p[1] })
-  console.log(points)
+// Создаем массив для хранения точек
+var geoObjects = [];
 
-          // Создаем массив для хранения точек
-          var geoObjects = [];
-
-          // Добавляем точки на карту
-          for (var i = 0; i < points.length; i++) {
-            var point = points[i];
-            geoObjects[i] = new ymaps.Placemark([point.latitude, point.longitude], {
-              balloonContent: point.name
-            });
-          }
-        
-          // Создаем маршрут и добавляем его на карту
-          var route = new ymaps.multiRouter.MultiRoute({
-            referencePoints: geoObjects.map(function (geoObject) {
-              return geoObject.geometry.getCoordinates();
-            }),
-            params: {
-              results: 1 // ограничиваем количество альтернативных маршрутов до одного
-            }
-          }, {
-            boundsAutoApply: true // автоматически подгоняем размер карты под маршрут
-          });
-        
-          map.geoObjects.add(route); // добавляем маршрут на карту
-          map.geoObjects.add(geoObjects); // добавляем точки на карту
+// Добавляем точки на карту
+for (var i = 0; i < points.length; i++) {
+  var point = points[i];
+  geoObjects[i] = new ymaps.Placemark([point.latitude, point.longitude], {
+    balloonContent: point.name
   });
+}
+
+// Создаем маршрут и добавляем его на карту
+var route = new ymaps.multiRouter.MultiRoute({
+  referencePoints: geoObjects.map(function (geoObject) {
+    return geoObject.geometry.getCoordinates();
+  }),
+  params: {
+    results: 1 // ограничиваем количество альтернативных маршрутов до одного
+  }
+}, {
+  boundsAutoApply: true // автоматически подгоняем размер карты под маршрут
+});
+
+map.geoObjects.add(route); // добавляем маршрут на карту
+map.geoObjects.add(geoObjects); // добавляем точки на карту
 }
 
 ymaps.ready(init);
