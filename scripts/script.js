@@ -215,6 +215,14 @@ function init() {
       zoom: 7
     }
   });
+  var geolocation = ymaps3.geolocation;
+
+  geolocation.getPosition({
+    provider: 'yandex',
+    mapStateAutoApply: true
+}).then(function (result) {
+  console.log(result.coords)
+});
 }
 
 
