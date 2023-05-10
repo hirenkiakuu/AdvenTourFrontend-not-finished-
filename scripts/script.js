@@ -1,4 +1,4 @@
-ymaps.ready(init);
+
 for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
     e.style.setProperty('--value', e.value);
     e.style.setProperty('--min', e.min == '' ? '0' : e.min);
@@ -257,7 +257,7 @@ map.geoObjects.add(route); // добавляем маршрут на карту
 map.geoObjects.add(geoObjects); // добавляем точки на карту
 }
 
-
+ymaps.ready(init);
 
 
 let paramPath = document.querySelector('.paramPath');
