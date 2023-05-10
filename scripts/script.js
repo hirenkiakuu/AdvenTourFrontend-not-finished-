@@ -1,3 +1,4 @@
+ymaps.ready(init);
 for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
     e.style.setProperty('--value', e.value);
     e.style.setProperty('--min', e.min == '' ? '0' : e.min);
@@ -85,33 +86,38 @@ function HideSubcategories() {
 }
 
 
-let event = null;
-let len = 0;
+slideMenu(categoriesWindow, openCategoriesMenu, closeCategoriesMenu)
 
-categoriesWindow.addEventListener("touchstart", function (e) {
+function slideMenu(slideWindow, openWindow, closeWindow) {
+  let event = null;
+  let len = 0;
+
+  slideWindow.addEventListener("touchstart", function (e) {
     event = e;
-});
-categoriesWindow.addEventListener("touchmove", function (e) {
+  });
+
+  slideWindow.addEventListener("touchmove", function (e) {
     if (event) {
         len = (e.touches[0].pageY - event.touches[0].pageY) * 0.118;
         if (len >= 0 && len <= 100) {
-          categoriesWindow.style.transform = `translateY(${len}vh)`;
-          categoriesWindow.style.transition = 'none';
+          slideWindow.style.transform = `translateY(${len}vh)`;
+          slideWindow.style.transition = 'none';
         }
     }
-});
-categoriesWindow.addEventListener("touchend", function (e) {
+  });
+
+  slideWindow.addEventListener("touchend", function (e) {
     event = null;
-    categoriesWindow.style.transition = 'all ease-in-out 0.2s';
+    slideWindow.style.transition = 'all ease-in-out 0.2s';
     
     if (len < 20) {
-      openCategoriesMenu();
+      openWindow();
     } else {
-      closeCategoriesMenu();
+      closeWindow();
       len = 0;
     }
 });
-
+}
 
 const subcategories = document.querySelectorAll('.categorie_item');
 let selectSubCategories = {};
@@ -191,6 +197,8 @@ function unActiveApplybtn() {
 function applyBtn() {
   document.querySelector('.filter_screen').classList.remove('active_filter');
   document.querySelector('.map').classList.add('active_filter');
+  document.querySelector('.paramPath').classList.add('active_filter');
+  
 }
 
 // закрытие окна с фильтром
@@ -216,7 +224,7 @@ function init() {
     // Создаем карту с добавленной на нее кнопкой.
     var map = new ymaps.Map('map', {
       center: [56.8519, 60.6122],
-      zoom: 11,
+      zoom: 14,
       controls: []
   }, {
       buttonMaxWidth: 300
@@ -249,7 +257,31 @@ map.geoObjects.add(route); // добавляем маршрут на карту
 map.geoObjects.add(geoObjects); // добавляем точки на карту
 }
 
-ymaps.ready(init);
 
 
 
+let paramPath = document.querySelector('.paramPath');
+// открывает меню подкатегорий
+function openParamPath() {
+  paramPath.style.transform = 'translateY(0vh)';
+  document.querySelector('body').style.overflow = 'hidden';
+  blackout.classList.add('active');
+}
+
+// закрывает меню подкатегорий
+function closeParamPath() {
+  paramPath.style.transform = 'translateY(80vh)';
+  document.querySelector('body').style.overflow = 'scroll';
+  blackout.classList.remove('active');
+}
+
+slideMenu(paramPath, openParamPath, closeParamPath)
+
+document.querySelector('.paramPath_apply__btn').addEventListener('click', () => {
+  document.querySelector('.filter_screen').classList.add('active_filter');
+  document.querySelector('.map').classList.remove('active_filter');
+  document.querySelector('.paramPath').classList.remove('active_filter');
+  paramPath.style.transform = 'translateY(80vh)';
+  document.querySelector('body').style.overflow = 'scroll';
+  blackout.classList.remove('active');
+})

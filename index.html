@@ -14,10 +14,11 @@
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60" type="text/javascript"></script>
 </head>
 <body>
-    <div class="filter_screen">
+    <div class="filter_screen active_filter">
     <div class="blackout"></div>
 
     <div class="close_btn"></div>
+    
         <div class="categoriesList">
 
         </div>
@@ -165,15 +166,102 @@
     </section>
 </div>
 
-<section class="map active_filter">
+<section class="map ">
     <div id="map"></div>
-    <div class="burger"><img src="img/icons_map/burger.svg" alt=""></div>
+    <div class="burger"><img src="" alt=""></div>
     <div class="list"></div>
     <div class="location"></div>
 </section>
 
+<section class="paramPath">
+        <div class="path_wrapper">
+            <div class="paramPath_item">
+                <h2 class="paramPath_item__title">Параметры маршрута:</h2>
+                <div class="paramPath_item__wrapper">
+                    <div class="paramPath_item__time">
+                        <p class="item_time__title">Время маршрута(часов)</p>
+                        <p class="item_time__value">5</p>
+                    </div>
+                    <div class="paramPath_item__budget">
+                        <p class="item_budget__title">Бюджет маршрута(рублей)</p>
+                        <p class="item_budget__value">200</p>
+                    </div>
+                </div>
+            </div>
+            <div class="paramPath_points">
+                <h2 class="paramPath_points__title">Найдено мест: 3</h2>
+                <div class="paramPath_points__wrapper">
+                    <ul class="paramPath_points__list">
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Храм на крови</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/храм на крови.svg" alt="">
+                        </li>
+
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Орден Ленина</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/Троицкий собор.svg" alt="">
+                        </li>
+
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Жертвам репрессий</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/Иннокентиевский храм.svg" alt="">
+                        </li>
+
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Жертвам репрессий</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/Иннокентиевский храм.svg" alt="">
+                        </li>
+                    </ul>
+                    <div class="apply_btn__container">
+                        <div class="paramPath_apply__btn">Изменить</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
 </body>
-<script src="scripts/script.js"></script>
+<script type="module" src="scripts/script.js"></script>
 <script src="serviceWorker.js"></script>
 <script src="app.js"></script>
 </html>
