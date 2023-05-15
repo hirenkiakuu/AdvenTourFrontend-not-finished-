@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdvenTure</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-    <script src="https://api-maps.yandex.ru/3.0/?apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60&lang=ru_RU"></script>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <script src="https://api-maps.yandex.ru/3.0/?apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60&lang=ru_RU" type="text/javascript"></script>
+    <script src="common.js"></script>
 
+    <script>
+        main();
+        async function main() {
+            await ymaps3.ready;
+            const {
+                YMap,
+                YMapDefaultSchemeLayer
+            } = ymaps3;
 
+            const map = new YMap(document.getElementById('app'), {
+                location: LOCATION
+            });
 
-<body>
-    <p>Карта Москвы</p>
-    <div id="first_map" style="width:400px; height:300px"></div>
-</body>
-<script>
-    ymaps3.ready.then(() => {
-      // HTML-элемент.
-      const map = new ymaps3.YMap(document.getElementById('#first_map'), {
-        location: {
-          center: [37.64, 55.76],
-          zoom: 10
+            const layer = new YMapDefaultSchemeLayer({
+                customization: CUSTOMIZATION
+            });
+            map.addChild(layer);
         }
-      }).addChild(new ymaps3.YMapDefaultSchemeLayer({theme: 'dark'}));        
-    });
+    </script>
 
-    
-  </script>
+    <style>
+html,
+body,
+#app {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Yandex Sans Text', Arial, Helvetica, sans-serif;
+}
+</style>
+    <link rel="stylesheet" href="./common.css">
+</head>
+<body>
+    <div id="app"></div>
+</body>
 </html>
