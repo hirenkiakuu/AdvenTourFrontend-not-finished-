@@ -16,12 +16,10 @@
             } = ymaps3;
 
             const map = new YMap(document.getElementById('app'), {
-                location: LOCATION
+                location: {center: [37.568496, 55.71372], zoom: 15}
             });
 
-            const layer = new YMapDefaultSchemeLayer({
-                customization: CUSTOMIZATION
-            });
+            const layer = new YMapDefaultSchemeLayer();
             map.addChild(layer);
         }
     </script>
