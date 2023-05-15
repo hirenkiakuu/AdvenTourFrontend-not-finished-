@@ -17,13 +17,14 @@
 <script>
     ymaps3.ready.then(() => {
       // HTML-элемент.
+      const layer = new YMapDefaultSchemeLayer();
       const moscow_map = new ymaps3.YMap(document.getElementById('#first_map'), {
         location: {
           center: [37.64, 55.76],
           zoom: 10
         }
       });
-      const layer = new YMapDefaultSchemeLayer();
+      console.log(layer)
       moscow_map.addChild(layer);
     });
 
