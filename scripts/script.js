@@ -1,37 +1,43 @@
 
+// управление слайдерами
 for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
     e.style.setProperty('--value', e.value);
     e.style.setProperty('--min', e.min == '' ? '0' : e.min);
     e.style.setProperty('--max', e.max == '' ? '100' : e.max);
     e.addEventListener('input', () => e.style.setProperty('--value', e.value));
 }
-// достаем значения из input
+// получаем значения из input слайдеров
 const timeInpute = document.querySelector('.time_input');
 const budgetInput = document.querySelector('.budget_input');
 
-const timeValue = document.querySelector('.time_value');
-const budgetValue = document.querySelector('.budget_value');
+// находим заголовки времени и бюджета
+const timeLabel = document.querySelector('.time_value');
+const budgetLabel = document.querySelector('.budget_value');
 
-// стандартные значения
+// стандартные значения времени и бюджета
 const time = 5;
 const budget = 0;
 
+// выставляем начальные значения времени и бюджета на label
 timeInpute.value = time;
 budgetInput.value = budget;
-timeValue.textContent = time;
 
+// выставляем начальное значание времени input
+timeLabel.textContent = time;
+
+// обрабатываем изменнение времени input
 timeInpute.addEventListener('input', () => {
-  timeValue.textContent = timeInpute.value;
+  timeLabel.textContent = timeInpute.value;
 });
 
+// обрабатываем изменнение бюджета input
 budgetInput.addEventListener('input', () => {
-  budgetValue.textContent = budgetInput.value;
+  budgetLabel.textContent = budgetInput.value;
 });
 
-// categories 
+// достаем все категории
 const categories = document.querySelectorAll('.categories_item');
 const categoriesWindow = document.querySelector('.categorie');
-const blackout = document.querySelector('.blackout');
 
 // событие клика на категории 
 categories.forEach((item, index) => {
@@ -41,6 +47,8 @@ categories.forEach((item, index) => {
   });
 });
 
+
+const blackout = document.querySelector('.blackout');
 
 // обработка клика на blackout
 blackout.addEventListener('click', (e) => {
@@ -72,12 +80,16 @@ function toggleBlackout() {
   blackout.classList.toggle('active')
 }
 
+// показваем подкатегории под нужным индексом
 function showSubcategories(index) { 
   let items = document.querySelectorAll(`.categorie_item[data="${index}"]`);
+
   for(let item of items) {
     item.style.display = 'flex';
   }
 }
+
+// скрываем все категории
 function HideSubcategories() {
   let items = document.querySelectorAll(`.categorie_item`);
   for(let item of items) {
@@ -98,8 +110,9 @@ function slideMenu(slideWindow, openWindow, closeWindow) {
 
   slideWindow.addEventListener("touchmove", function (e) {
     if (event) {
-        len = (e.touches[0].pageY - event.touches[0].pageY) * 0.118;
-        if (len >= 0 && len <= 100) {
+        len = e.touches[0].pageY * 0.118 - 20
+
+        if (len >= 0 && len <= 80) {
           slideWindow.style.transform = `translateY(${len}vh)`;
           slideWindow.style.transition = 'none';
         }
@@ -107,6 +120,7 @@ function slideMenu(slideWindow, openWindow, closeWindow) {
   });
 
   slideWindow.addEventListener("touchend", function (e) {
+
     event = null;
     slideWindow.style.transition = 'all ease-in-out 0.2s';
     
@@ -285,3 +299,41 @@ document.querySelector('.paramPath_apply__btn').addEventListener('click', () => 
   document.querySelector('body').style.overflow = 'scroll';
   blackout.classList.remove('active');
 })
+
+
+
+
+// let param = {
+//   categories: ["Церкви и храмы"],
+//   price: 0,
+//   time: 120,
+//   lat: 56.844355,
+//   lon: 60.653219
+// };
+
+
+// fetch('http://45.12.238.32:3000', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8'
+//   },
+//   body: JSON.stringify(param),
+  
+// })
+// .then(res => { 
+//   let arr = JSON.parse(res);
+//   arr.forEach(item => {
+//     item.push([item.lat, item.lon])
+//   });
+//   cords = [];
+
+// })
+
+// let points = []
+// let test = {
+//   lat: 60,
+//   lon: 50
+// }
+// points.push([test.lat, test.lon])
+// console.log(points)
+
