@@ -1,94 +1,246 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script
-      src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=c6eadd12-4b26-4362-9fbd-7d30e54da611"
-      type="text/javascript"
-    ></script>
-    <script type="text/javascript">
-            //   navigator.geolocation.getCurrentPosition((position) => {
-            //     const { latitude, longitude } = position.coords;
-            //     // Show a map centered at latitude / longitude.
-            //   });
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdvenTure</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=43b5adb5-61b5-43b9-b4bf-1bd8d0065d60" type="text/javascript"></script>
+</head>
+<body>
+    <div class="filter_screen active_filter">
+    <div class="blackout"></div>
 
-      ymaps.ready(init);
-      function init() {
-        let location = [];
+    <div class="close_btn"></div>
+    
+        <div class="categoriesList">
 
-        if (navigator.geolocation) {
-          navigator.geolocation.watchPosition(showPosition, errorCallback);
-        } else {
-          console.log("Geolocation is not supported by this browser.");
-        }
+        </div>
 
-        function showPosition(position) {
-          let latitude = position.coords.latitude;
-          let longitude = position.coords.longitude;
+    <section class="filter">
+        <div class="container">
+            <div class="range_container">
+                <div class="route_time">
+                    <h2 class="range_title">Время маршрута (часов)</h2>
+                    <input class="range_item styled-slider slider-progress time_input" type="range" name="route_time" min="0" max="10">
+                    <div class="range_values">
+                        <span class="range_value">0</span>
+                        <span class="range_value time_value">10</span>
+                    </div>
+                </div>
+                <div class="budget">
+                    <h2 class="range_title">Бюджет (рублей)</h2>
+                    <input class="range_item styled-slider slider-progress budget_input" type="range" name="budget" min="0" max="5000" value="0">
+                    <div class="range_values">
+                        <span class="range_value">0</span>
+                        <span class="range_value budget_value">5000</span>
+                    </div>
+                </div>
+            </div>
 
-          location = [latitude, longitude];
+            <div class="categories_container">
+                <h1 class="categories_title">Категории</h1>
+                <div class="categories_wrapper">
+                    <ul class="categories_items">
+                        <li class="categories_item">
+                            <span class="categories_content">Архитектура</span>
+                        </li>
+                        <li class="categories_item">
+                            <span class="categories_content">Вкусно покушать</span>
+                        </li>
+                        <li class="categories_item">
+                            <span class="categories_content">Развлечения</span>
+                        </li>
+                        <li class="categories_item">
+                            <span class="categories_content">Просвещение</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-          console.log("Latitude: " + latitude);
-          console.log("Longitude: " + longitude);
-        }
+            <div class="apply_btn__container">
+                <div class="apply_btn">Применить</div>
+            </div>
+        </div>
+    </section>
 
-        function errorCallback(error) {
-          console.log("error occured");
-        }
+    <section class="categorie">
+        <div class="container">
+            <div class="categorie_wrapper">
+                <ul class="categorie_items">
+                    <li class="categorie_item" data="0">
+                        <img class="categorie_item__img" src="img/architecture/temple.svg" alt="Храмы">
+                        <span class="categorie_item__title">Скульптуры</span>
+                    </li>
+                    <li class="categorie_item" data="0">
+                        <img class="categorie_item__img" src="img/architecture/bridges.svg" alt="Мосты">
+                        <span class="categorie_item__title">Мосты</span>
+                    </li>
+                    <li class="categorie_item" data="0">
+                        <img class="categorie_item__img" src="img/architecture/monuments.svg" alt="Памятники">
+                        <span class="categorie_item__title">Памятники</span>
+                    </li>
+                    
+                    <!-- вкусно покушать -->
+                    <li class="categorie_item" data="1">
+                        <img class="categorie_item__img" src="img/meal/restaurants.svg" alt="Памятники">
+                        <span class="categorie_item__title">Рестораны</span>
+                    </li>
+                    <li class="categorie_item" data="1">
+                        <img class="categorie_item__img" src="img/meal/cafe.svg" alt="Памятники">
+                        <span class="categorie_item__title">Кафе</span>
+                    </li>
+                    <li class="categorie_item" data="1">
+                        <img class="categorie_item__img" src="img/meal/canteens.svg" alt="Памятники">
+                        <span class="categorie_item__title">Столовые</span>
+                    </li>
 
-        let coords = [location[0], location[1]];
+                    <!-- развлечения -->
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/quests.svg" alt="Памятники">
+                        <span class="categorie_item__title">Квесты</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/anti-cafe.svg" alt="Памятники">
+                        <span class="categorie_item__title">Антикафе</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/game-clubs.svg" alt="Памятники">
+                        <span class="categorie_item__title">Геймклубы</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/karaoke.svg" alt="Памятники">
+                        <span class="categorie_item__title">Караоке</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/zoos.svg" alt="Памятники">
+                        <span class="categorie_item__title">Зоопарки</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/water-parks.svg" alt="Памятники">
+                        <span class="categorie_item__title">Аквапарки</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/coworking.svg" alt="Памятники">
+                        <span class="categorie_item__title">Коворкинги</span>
+                    </li>
+                    <li class="categorie_item" data="2">
+                        <img class="categorie_item__img" src="img/entertainments/oceanariums.svg" alt="Памятники">
+                        <span class="categorie_item__title">Океанариум</span>
+                    </li>
 
-        let myMap = new ymaps.Map("map", {
-          center: coords,
-          zoom: 13,
-          controls: [],
-        });
+                    <!-- Просвещение -->
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/museums.svg" alt="Памятники">
+                        <span class="categorie_item__title">Музеи</span>
+                    </li>
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/libraries.svg" alt="Памятники">
+                        <span class="categorie_item__title">Библиотеки</span>
+                    </li>
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/theaters.svg" alt="Памятники">
+                        <span class="categorie_item__title">Театры</span>
+                    </li>
+                    <li class="categorie_item" data="3">
+                        <img class="categorie_item__img" src="img/education/exhibitions.svg" alt="Памятники">
+                        <span class="categorie_item__title">Выставки</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
 
-        let geolocationControl = new ymaps.control.GeolocationControl({
-          options: {
-            noPlacemark: false, // Отключаем отображение метки на карте
-            placemarkOptions: {
-              preset: "islands#blueCircleIcon", // Здесь указывается цвет метки
-            },
-          },
-        });
+<section class="map ">
+    <div id="map"></div>
+    <div class="burger"><img src="" alt=""></div>
+    <div class="list"></div>
+    <div class="location"></div>
+</section>
 
-        // Добавляем кнопку на карту
-        myMap.controls.add(geolocationControl);
+<section class="paramPath">
+        <div class="path_wrapper">
+            <div class="paramPath_item">
+                <h2 class="paramPath_item__title">Параметры маршрута:</h2>
+                <div class="paramPath_item__wrapper">
+                    <div class="paramPath_item__time">
+                        <p class="item_time__title">Время маршрута(часов)</p>
+                        <p class="item_time__value">5</p>
+                    </div>
+                    <div class="paramPath_item__budget">
+                        <p class="item_budget__title">Бюджет маршрута(рублей)</p>
+                        <p class="item_budget__value">200</p>
+                    </div>
+                </div>
+            </div>
+            <div class="paramPath_points">
+                <h2 class="paramPath_points__title">Найдено мест: 3</h2>
+                <div class="paramPath_points__wrapper">
+                    <ul class="paramPath_points__list">
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Храм на крови</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/храм на крови.svg" alt="">
+                        </li>
 
-        //func to get points data
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Орден Ленина</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/Троицкий собор.svg" alt="">
+                        </li>
 
-        let points = [
-          [56.84401472204153, 60.65393900228841],
-          [56.82906577816284, 60.59882364897638],
-          coords,
-        ];
+                        <li class="paramPath_points__item">
+                            <div class="paramPath_points__info">
+                                <h2 class="points__info_title">Жертвам репрессий</h2>
+                                <p class="points__info_time">
+                                    Время маршрута
+                                    <span>20 минут</span>
+                                </p>
+                                <p class="points__info_budget">
+                                    Бюджет
+                                    <span>1000 рублей</span>
+                                </p>
+                            </div>
+                            <img class="points__info_img" src="img/Иннокентиевский храм.svg" alt="">
+                        </li>
 
-        ymaps.route(points).then(
-          function (route) {
-            myMap.geoObjects.add(route);
+                       
+                    </ul>
+                    <div class="apply_btn__container">
+                        <div class="paramPath_apply__btn">Изменить</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
 
-            var points = route.getWayPoints();
-
-            // Задаем стиль метки - иконки будут красного цвета, и
-            // их изображения будут растягиваться под контент.
-            points.options.set("preset", "twirl#redStretchyIcon");
-            // Задаем контент меток в начальной и конечной точках.
-            points.get(0).properties.set("iconContent", "Уник");
-            points.get(1).properties.set("iconContent", "Гринвич");
-            points
-              .get(points.getLength() - 1)
-              .properties.set("iconContent", "Хата");
-          },
-          function (error) {
-            alert("Возникла ошибка: " + error.message);
-          }
-      )};
-    </script>
-  </head>
-
-  <body>
-    <div id="map" style="width: 1000px; height: 800px; margin: auto"></div>
-  </body>
+</body>
+<script type="module" src="scripts/script.js"></script>
+<script src="serviceWorker.js"></script>
+<script src="app.js"></script>
 </html>
