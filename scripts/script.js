@@ -110,9 +110,10 @@ function slideMenu(slideWindow, openWindow, closeWindow) {
 
   slideWindow.addEventListener("touchmove", function (e) {
     if (event) {
-        len = e.touches[0].pageY * 0.118 - 20
+        len = (e.touches[0].pageY - event.touches[0].pageY) * 0.118;
+        console.log(len)
 
-        if (len >= 0 && len <= 80) {
+        if (len >= 0 && len <= 100) {
           slideWindow.style.transform = `translateY(${len}vh)`;
           slideWindow.style.transition = 'none';
         }
@@ -303,31 +304,31 @@ document.querySelector('.paramPath_apply__btn').addEventListener('click', () => 
 
 
 
-// let param = {
-//   categories: ["Церкви и храмы"],
-//   price: 0,
-//   time: 120,
-//   lat: 56.844355,
-//   lon: 60.653219
-// };
+let param = {
+  categories: ["Церкви и храмы"],
+  price: 0,
+  time: 120,
+  lat: 56.844355,
+  lon: 60.653219
+};
 
 
-// fetch('http://45.12.238.32:3000', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json;charset=utf-8'
-//   },
-//   body: JSON.stringify(param),
+fetch('http://45.12.238.32:3000', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(param),
   
-// })
-// .then(res => { 
-//   let arr = JSON.parse(res);
-//   arr.forEach(item => {
-//     item.push([item.lat, item.lon])
-//   });
-//   cords = [];
+})
+.then(res => { 
+  let arr = JSON.parse(res);
+  arr.forEach(item => {
+    item.push([item.lat, item.lon])
+  });
+  cords = [];
 
-// })
+})
 
 // let points = []
 // let test = {
