@@ -1,36 +1,3 @@
-// let a = [
-//   {
-//       "id": 50,
-//       "name": "Погибшим в афганской войне Чёрный тюльпан",
-//       "latitude": 56.843202,
-//       "longitude": 60.617393,
-//       "price": 0,
-//       "time": 15,
-//       "category": "Памятники",
-//       "description": "Мемориал уральским воинам-интернационалистам, погибшим в Афганистане, и воинам, погибшим в Чечне. Находится на площади Советской Армии в квадрате улиц Луначарского - Первомайская - Мамина-Сибиряка - Шарташская."
-//   },
-//   {
-//       "id": 36,
-//       "name": "Плотинка",
-//       "latitude": 56.839513,
-//       "longitude": 60.612413,
-//       "price": 0,
-//       "time": 40,
-//       "category": "Мосты",
-//       "description": "Плотина, расположенная на реке Исеть в Историческом сквере Екатеринбурга. Построена в 1723 году, впоследствии многократно перестраивалась. Жители города называют её «Плотинка». Традиционное место массовых народных гуляний и праздников."
-//   },
-//   {
-//       "id": 19,
-//       "name": "Владимир Высоцкий и Марина Влади",
-//       "latitude": 56.837102,
-//       "longitude": 60.615808,
-//       "price": 0,
-//       "time": 15,
-//       "category": "Скульптуры",
-//       "description": "Памятник, установленный в г. Екатеринбурге рядом с главным входом в торгово-развлекательный центр «Антей», жанр скульптуры - паблик-арт"
-//   }
-// ]
-
 
 
 const categoriesItems = {
@@ -300,21 +267,61 @@ function applyBtn() {
   
     console.log(JSON.stringify(categoriesItems))
   
-    fetch('http://127.0.0.1:3000', {
+    fetch('https://adven-tour.site/api', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json;'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(categoriesItems),  
     })
     .then(res => { 
-      console.log(res)
-      ymaps.ready(init(res, categoriesItems.lat, categoriesItems.lon));
+      return res.json();
     })
-
+    .then(data => {
+      console.log(data)
+      infoRout(a)
+      ymaps.ready(init(data, categoriesItems.lat, categoriesItems.lon));
+    })
+    
     // ymaps.ready(init(a, categoriesItems.lat, categoriesItems.lon));
   }
 
+}
+
+function infoRout(data) {
+  let globalTime = timeInpute.value;
+  let globalPrice = budgetInput.value;
+
+  document.querySelector('.item_time__value').textContent = globalTime;
+  document.querySelector('.item_budget__value').textContent = globalPrice;
+
+  document.querySelector('.paramPath_points__title').textContent = `Найдено мест: ${data.length}`
+  let paramPathContainer = document.querySelector('.paramPath_points__list');
+  let pointList = []
+
+  data.forEach((item) => {
+    pointList.push(
+      `
+      <li class="paramPath_points__item">
+          <div class="paramPath_points__info">
+              <h2 class="points__info_title">${item.name}</h2>
+              <p class="points__info_time">
+                  Время маршрута
+                  <span>${item.time} минут</span>
+              </p>
+              <p class="points__info_budget">
+                  Бюджет
+                  <span>${item.price} рублей</span>
+              </p>
+          </div>
+          <img class="points__info_img" src="${item.link}" alt="">
+      </li>
+      `
+    )
+
+  });
+
+  paramPathContainer.innerHTML = pointList.join("");
 }
  
 
@@ -339,6 +346,14 @@ function init(points, cordsPersonLat, cordsPersonLon) {
     zoom: 14,
     controls: ['geolocationControl']
 });
+
+let balloonLayout = ymaps.templateLayoutFactory.createClass(
+  " ", {
+      onCloseClick: function (e) {
+          console.log('click')
+      }
+  }
+)
   
   
 // Создаем массив для хранения точек
@@ -347,13 +362,10 @@ var geoObjects = [];
 // Добавляем точки на карту
 for (var i = 0; i < points.length; i++) {
   var point = points[i];
-  geoObjects[i] = new ymaps.Placemark([point.latitude, point.longitude], {
-    balloonContent: point.name
-  });
-
-  geoObjects[i].events.add('click', function (e) {
-    console.log('click');
-  });
+  geoObjects[i] = new ymaps.Placemark([point.latitude, point.longitude]);
+  geoObjects[i].description = point.description;
+  geoObjects[i].name = point.name;
+  geoObjects[i].link = point.link;
 }
 
 geoObjects.push(new ymaps.Placemark([cordsPersonLat, cordsPersonLon]))
@@ -368,8 +380,14 @@ var route = new ymaps.multiRouter.MultiRoute({
     results: 1 // ограничиваем количество альтернативных маршрутов до одного
   }
 }, {
+  wayPointVisible: false,
+  routeActiveMarkerVisible: false,
+  balloonLayout: balloonLayout,
+  // Отключаем режим панели для балуна.
+  balloonPanelMaxMapArea: 0,
   boundsAutoApply: true // автоматически подгоняем размер карты под маршрут
 });
+
 
 
 
@@ -379,8 +397,16 @@ geoObjects.forEach(function (geoObject) {
   // Привязка обработчика события 'click' к каждой метке
   geoObject.events.add("click", function (e) {
     // Код обработки клика на метке
-    console.log("Клик на метке:", geoObject);
-    // Дополнительные действия, которые вы хотите выполнить при клике на метке
+    
+
+    if (geoObject.description) {
+      document.querySelector('.paramPath').classList.remove('active_filter');
+      document.querySelector('.aboutPoint').classList.add('activeAboutPoint');
+  
+      document.querySelector('.aboutPointImg').src = geoObject.link;
+      document.querySelector('.aboutPointInfoTitle').textContent = geoObject.name;
+      document.querySelector('.aboutPointInfoText').textContent = geoObject.description;
+    }
   });
 
   map.geoObjects.add(geoObject);
@@ -388,8 +414,6 @@ geoObjects.forEach(function (geoObject) {
 
 
 }
-
-
 
 
 let paramPath = document.querySelector('.paramPath');
@@ -407,7 +431,42 @@ function closeParamPath() {
   blackout.classList.remove('active');
 }
 
-slideMenu(paramPath, openParamPath, closeParamPath)
+
+let touchItem = document.querySelector('.paramPath_item__title');
+function slideMenu2(slideWindow, openWindow, closeWindow, touchItem) {
+  let event = null;
+  let len = 0;
+
+  touchItem.addEventListener("touchstart", function (e) {
+    event = e;
+  });
+
+  slideWindow.addEventListener("touchmove", function (e) {
+    if (event) {
+        len = (e.touches[0].pageY - event.touches[0].pageY) * 0.118;
+
+        if (len >= 0 && len <= 100) {
+          slideWindow.style.transform = `translateY(${len}vh)`;
+          slideWindow.style.transition = 'none';
+        }
+    }
+  });
+
+  slideWindow.addEventListener("touchend", function (e) {
+
+    event = null;
+    slideWindow.style.transition = 'all ease-in-out 0.2s';
+    
+    if (len < 20) {
+      openWindow();
+    } else {
+      closeWindow();
+      len = 0;
+    }
+});
+}
+
+slideMenu2(paramPath, openParamPath, closeParamPath, touchItem)
 
 document.querySelector('.paramPath_apply__btn').addEventListener('click', () => {
   document.querySelector('.filter_screen').classList.add('active_filter');
@@ -416,6 +475,12 @@ document.querySelector('.paramPath_apply__btn').addEventListener('click', () => 
   paramPath.style.transform = 'translateY(80vh)';
   document.querySelector('body').style.overflow = 'scroll';
   blackout.classList.remove('active');
+})
+
+
+document.querySelector('.aboutPointClose').addEventListener('click', () => {
+  document.querySelector('.paramPath').classList.add('active_filter');
+  document.querySelector('.aboutPoint').classList.remove('activeAboutPoint');
 })
 
 

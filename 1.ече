@@ -1,0 +1,18 @@
+const categoriesItems = {
+  categories: ['Мосты', 'Памятники'],
+  price: "1500",
+  time: 300,
+  lat: '56.8328192',
+  lon: '60.5847552'
+}
+
+fetch('https://adven-tour.site/api', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;'
+      },
+      body: JSON.stringify(categoriesItems),  
+    })
+    .then(res => { 
+      console.log(res)
+    })

@@ -483,6 +483,7 @@ body {
 .points__info_img {
     width: 100px;
     height: 100px;
+    border-radius: 20px;
 }
 .paramPath_points__item {
     margin-top: 15px;
@@ -519,7 +520,12 @@ body {
     display: none;
 }
 
+.activeAboutPoint {
+    display: block !important;
+}
 .aboutPoint {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    display: none;
     z-index: 999999;
     position: fixed;
     bottom: 20px;
@@ -532,6 +538,8 @@ body {
     margin-right: 10px; */
 }
 .aboutPointImgWrapper {
+    height: 230px;
+    overflow: hidden;
     max-width: 550px;
 }
 .aboutPointImgWrapper img{
@@ -555,4 +563,10 @@ body {
     line-height: 22px;
     padding: 0 15px 30px 15px;
     color: #898989;
+}
+
+.aboutPointClose {
+    position: absolute;
+    top: 24px;
+    right: 24px;
 }
