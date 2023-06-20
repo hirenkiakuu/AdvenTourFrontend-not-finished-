@@ -519,3 +519,40 @@ body {
     display: none;
 }
 
+.aboutPoint {
+    z-index: 999999;
+    position: fixed;
+    bottom: 20px;
+    background-color: #fff;
+    min-width: 355px;
+    border-radius: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* margin-left: 10px;
+    margin-right: 10px; */
+}
+.aboutPointImgWrapper {
+    max-width: 550px;
+}
+.aboutPointImgWrapper img{
+    width: 100%; /* Изначальная ширина картинки */
+    height: auto; /* Автоматическая высота картинки */
+    border-radius: 34px 34px 0px 0px;
+}
+.aboutPointInfoTitle {  
+    font-family: 'Open Sans';
+    padding: 30px 0 20px 15px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 22px;
+}
+.aboutPointInfoText {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 0 15px 30px 15px;
+    color: #898989;
+}

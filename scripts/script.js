@@ -1,3 +1,65 @@
+// let a = [
+//   {
+//       "id": 50,
+//       "name": "Погибшим в афганской войне Чёрный тюльпан",
+//       "latitude": 56.843202,
+//       "longitude": 60.617393,
+//       "price": 0,
+//       "time": 15,
+//       "category": "Памятники",
+//       "description": "Мемориал уральским воинам-интернационалистам, погибшим в Афганистане, и воинам, погибшим в Чечне. Находится на площади Советской Армии в квадрате улиц Луначарского - Первомайская - Мамина-Сибиряка - Шарташская."
+//   },
+//   {
+//       "id": 36,
+//       "name": "Плотинка",
+//       "latitude": 56.839513,
+//       "longitude": 60.612413,
+//       "price": 0,
+//       "time": 40,
+//       "category": "Мосты",
+//       "description": "Плотина, расположенная на реке Исеть в Историческом сквере Екатеринбурга. Построена в 1723 году, впоследствии многократно перестраивалась. Жители города называют её «Плотинка». Традиционное место массовых народных гуляний и праздников."
+//   },
+//   {
+//       "id": 19,
+//       "name": "Владимир Высоцкий и Марина Влади",
+//       "latitude": 56.837102,
+//       "longitude": 60.615808,
+//       "price": 0,
+//       "time": 15,
+//       "category": "Скульптуры",
+//       "description": "Памятник, установленный в г. Екатеринбурге рядом с главным входом в торгово-развлекательный центр «Антей», жанр скульптуры - паблик-арт"
+//   }
+// ]
+
+
+
+const categoriesItems = {
+  categories: [],
+  price: 0,
+  time: 300,
+  lat: '',
+  lon: ''
+}
+
+function checkCategoriesArray(item) {
+  const index = categoriesItems.categories.indexOf(item);
+  if (index !== -1) {
+    categoriesItems.categories.splice(index, 1);
+  } else {
+    categoriesItems.categories.push(item);
+  }
+  
+  console.log(categoriesItems)
+}
+
+navigator.geolocation.getCurrentPosition(function(position) {
+  var latitude = position.coords.latitude; // Широта
+  var longitude = position.coords.longitude; // Долгота
+
+  categoriesItems.lat = latitude;
+  categoriesItems.lon = longitude;
+});
+
 
 // управление слайдерами
 for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
@@ -28,11 +90,13 @@ timeLabel.textContent = time;
 // обрабатываем изменнение времени input
 timeInpute.addEventListener('input', () => {
   timeLabel.textContent = timeInpute.value;
+  categoriesItems.time = timeInpute.value * 60;
 });
 
 // обрабатываем изменнение бюджета input
 budgetInput.addEventListener('input', () => {
   budgetLabel.textContent = budgetInput.value;
+  categoriesItems.price = budgetInput.value;
 });
 
 // достаем все категории
@@ -111,7 +175,6 @@ function slideMenu(slideWindow, openWindow, closeWindow) {
   slideWindow.addEventListener("touchmove", function (e) {
     if (event) {
         len = (e.touches[0].pageY - event.touches[0].pageY) * 0.118;
-        console.log(len)
 
         if (len >= 0 && len <= 100) {
           slideWindow.style.transform = `translateY(${len}vh)`;
@@ -140,6 +203,10 @@ let selectSubCategories = {};
 // событие клика на подкатегории 
 subcategories.forEach((item, index) => {
   item.addEventListener('click', (e) => {
+    // Добавялем элементы в объект для отправки
+    let textSubcategory = item.querySelector('.categorie_item__title').textContent;
+    checkCategoriesArray(textSubcategory);
+
     selectSubcategory(index);  
     toggleItemParent();
   })
@@ -176,6 +243,7 @@ function toggleItem() {
   // создаем контенер для подкатегорий
   let container = document.createElement('ul');
   container.className = "categoriesList_items";
+  
 
   for(let item in selectSubCategories) {
     let liItem = document.createElement('li');
@@ -186,16 +254,22 @@ function toggleItem() {
     container.append(liItem);
 
     liItem.addEventListener('click', () => {
+      // Добавялем элементы в объект для отправки
+      let textSubcategory = selectSubCategories[item].querySelector('.categorie_item__title').textContent;
+      checkCategoriesArray(textSubcategory);
+
       delete selectSubCategories[item];
       subcategories[item].classList.remove('active_item'); 
       toggleItemParent()
       toggleItem()
-    })
+    });
+    
   }
   document.querySelector('.categoriesList').innerHTML = `
   <h2 class="categoriesList_title">Ваш выбор:</h2>
   `;
   document.querySelector('.categoriesList').append(container);
+  
 }
 
 function activeApplybtn() {
@@ -210,11 +284,39 @@ function unActiveApplybtn() {
 }
 
 function applyBtn() {
-  document.querySelector('.filter_screen').classList.remove('active_filter');
-  document.querySelector('.map').classList.add('active_filter');
-  document.querySelector('.paramPath').classList.add('active_filter');
+  // если нет координат пользователя, то запрашиваем координаты, если есть, то делаем запрос на сервер
+  if (categoriesItems.lat.length == 0 || categoriesItems.lat.length == 0) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var latitude = position.coords.latitude; // Широта
+      var longitude = position.coords.longitude; // Долгота
+    
+      categoriesItems.lat = latitude;
+      categoriesItems.lon = longitude;
+    });
+  } else {
+    document.querySelector('.filter_screen').classList.remove('active_filter');
+    document.querySelector('.map').classList.add('active_filter');
+    document.querySelector('.paramPath').classList.add('active_filter');
   
+    console.log(JSON.stringify(categoriesItems))
+  
+    fetch('http://127.0.0.1:3000', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;'
+      },
+      body: JSON.stringify(categoriesItems),  
+    })
+    .then(res => { 
+      console.log(res)
+      ymaps.ready(init(res, categoriesItems.lat, categoriesItems.lon));
+    })
+
+    // ymaps.ready(init(a, categoriesItems.lat, categoriesItems.lon));
+  }
+
 }
+ 
 
 // закрытие окна с фильтром
 document.querySelector('.close_btn').addEventListener('click', () => {
@@ -230,20 +332,14 @@ document.querySelector('.burger').addEventListener('click', () => {
 
 
 /// map
-function init() {
-  var points = [
-    { name: "Храм на крови", latitude: 56.844402, longitude: 60.609081 },
-    { name: "Орден Ленина", latitude: 56.856638, longitude: 60.60376 },
-    { name: "Жертвам репрессий", latitude: 56.827695, longitude: 60.579881 }
-  ];
-    // Создаем карту с добавленной на нее кнопкой.
-    var map = new ymaps.Map('map', {
-      center: [56.8519, 60.6122],
-      zoom: 14,
-      controls: []
-  }, {
-      buttonMaxWidth: 300
-  });
+function init(points, cordsPersonLat, cordsPersonLon) {
+  // Создаем карту с добавленной на нее кнопкой.
+  var map = new ymaps.Map('map', {
+    center: [56.8519, 60.6122],
+    zoom: 14,
+    controls: ['geolocationControl']
+});
+  
   
 // Создаем массив для хранения точек
 var geoObjects = [];
@@ -254,7 +350,14 @@ for (var i = 0; i < points.length; i++) {
   geoObjects[i] = new ymaps.Placemark([point.latitude, point.longitude], {
     balloonContent: point.name
   });
+
+  geoObjects[i].events.add('click', function (e) {
+    console.log('click');
+  });
 }
+
+geoObjects.push(new ymaps.Placemark([cordsPersonLat, cordsPersonLon]))
+
 
 // Создаем маршрут и добавляем его на карту
 var route = new ymaps.multiRouter.MultiRoute({
@@ -268,11 +371,25 @@ var route = new ymaps.multiRouter.MultiRoute({
   boundsAutoApply: true // автоматически подгоняем размер карты под маршрут
 });
 
+
+
 map.geoObjects.add(route); // добавляем маршрут на карту
-map.geoObjects.add(geoObjects); // добавляем точки на карту
+
+geoObjects.forEach(function (geoObject) {
+  // Привязка обработчика события 'click' к каждой метке
+  geoObject.events.add("click", function (e) {
+    // Код обработки клика на метке
+    console.log("Клик на метке:", geoObject);
+    // Дополнительные действия, которые вы хотите выполнить при клике на метке
+  });
+
+  map.geoObjects.add(geoObject);
+});
+
+
 }
 
-ymaps.ready(init);
+
 
 
 let paramPath = document.querySelector('.paramPath');
@@ -302,39 +419,4 @@ document.querySelector('.paramPath_apply__btn').addEventListener('click', () => 
 })
 
 
-
-
-let param = {
-  categories: ["Церкви и храмы"],
-  price: 0,
-  time: 120,
-  lat: 56.844355,
-  lon: 60.653219
-};
-
-
-fetch('http://45.12.238.32:3000', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  },
-  body: JSON.stringify(param),
-  
-})
-.then(res => { 
-  let arr = JSON.parse(res);
-  arr.forEach(item => {
-    item.push([item.lat, item.lon])
-  });
-  cords = [];
-
-})
-
-// let points = []
-// let test = {
-//   lat: 60,
-//   lon: 50
-// }
-// points.push([test.lat, test.lon])
-// console.log(points)
 
